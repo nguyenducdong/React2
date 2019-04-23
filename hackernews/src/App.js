@@ -6,26 +6,39 @@ import Table from './Component/Table'
 import * as constant from './Constants/Constants'
 import Button from './Component/Button'
 import axios from 'axios'
+import { sortBy } from 'lodash'
+import styled from 'styled-components';
 
 
-const list = [
-  {
-    title: 'React',
-    url: 'https:google.com',
-    author: 'Facebook',
-    objectID: 0
-  },
-  {
-    title: 'Java',
-    url: 'https:google.com',
-    author: 'Oracle',
-    objectID: 1
+
+
+// const isSearched = searchTerm => item => 
+//   item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+// const SORTS = {
+//   NONE: list => list,
+//   TITLE: list => sortBy(list,'title'),
+//   AUTHOR: list => sortBy(list,'author'),
+//   COMMENTS: list => sortBy(list, 'num_comments').reverse(),
+//   POINTS: list => sortBy(list, 'point').reverse()
+// }
+
+const updateSearchTopStoriesState = (hits, page) => (prevState) => {
+  const { searchKey, result } = prevState;
+  const oldHits = result && result[searchKey] ? result[searchKey].hits : [];
+  const updatedHits = [
+    ...oldHits,
+    ...hits
+  ];
+  return {
+    result: {
+      ...result,
+      [searchKey] : {hits: updatedHits, page}
+    },
+    isLoading: false
   }
-]
 
-
-const isSearched = searchTerm => item => 
-  item.title.toLowerCase().includes(searchTerm.toLowerCase());
+}
 
 class App extends Component {
 
@@ -37,7 +50,7 @@ class App extends Component {
       searchKey: '',
       searchTerm: constant.DEFAULT_QUERY,
       error: null,
-      isLoading: false
+      isLoading: false,
     };
 
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
@@ -48,6 +61,8 @@ class App extends Component {
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
     
   }
+
+ 
 
   needsToSearchTopStories(searchTerm){
     const flag = this.state.result[searchTerm];
@@ -70,24 +85,27 @@ class App extends Component {
     event.preventDefault();
   }
 
-  setSearchTopStories(json) {
-    // this.setState({result});
+  async setSearchTopStories(json) {
     const { hits, page } = json;
-    const {searchKey, result} = this.state;
+    
+    this.setState(updateSearchTopStoriesState(hits,page))
+    // this.setState({result});
+    // const { hits, page } = json;
+    // const {searchKey, result} = this.state;
 
-    const oldHits = result && result[searchKey] ? result[searchKey].hits : [];
-    const updatedHits = [
-      ...oldHits,
-      ...hits
-    ];
+    // const oldHits = result && result[searchKey] ? result[searchKey].hits : [];
+    // const updatedHits = [
+    //   ...oldHits,
+    //   ...hits
+    // ];
 
-    this.setState({
-      result: {
-        ...result,
-        [searchKey] : {hits: updatedHits, page}
-      },
-      isLoading: false
-    })
+    // this.setState({
+    //   result: {
+    //     ...result,
+    //     [searchKey] : {hits: updatedHits, page}
+    //   },
+    //   isLoading: false
+    // })
 
     // const oldHits = page !== 0
     //   ? this.state.result.hits
@@ -158,7 +176,9 @@ class App extends Component {
           ? <div>
             <p>Something went wrong</p>
           </div> 
-          : <Table list={list} onDismiss={this.onDismiss}/>
+          : <Table  list={list} 
+                    onDismiss={this.onDismiss}
+            />
         }
         {/* {result && 
           <Table list={list} onDismiss={this.onDismiss}/>
