@@ -2,23 +2,26 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const useStateWithLocalStorage = localStrorageKey => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(localStrorageKey) || ''
+  );
+
+  React.useEffect(()=>{
+    localStorage.setItem(localStrorageKey,value)
+  },[value]);
+
+  return [value, setValue];
+}
+
+const App= () => {
+  const [value, setValue] = useStateWithLocalStorage('DONGND');
+  const handleChange = event => setValue(event.target.value);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>Hello React in local Strorage</h2>
+      <input value={value} type="text" onChange={handleChange}/>
     </div>
   );
 }
