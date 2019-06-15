@@ -1,26 +1,45 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadArticles} from '../redux/actions/action'
+import {loadArticles, clap} from '../redux/actions/action'
 import AsideFeed from './AsideFeed'
+import { id } from 'postcss-selector-parser';
 
 const mapStateToProps = state => {
     return {
-        articles: state.articles.articles
+        articles: state.articles.articles,
+        articleID: state.articles.article
     }
 }
 
 const mapDispatchToProps = {
-    loadArticles: loadArticles
+    loadArticles: loadArticles,
+    like: clap
+}
+
+const handleLike = (id) => {
+    clap(id)
+    // this.setState({});
 }
 
 class Feed extends Component {
+
     componentWillMount() {
         this.props.loadArticles()
     }
+    // state = {
+    //     articleState: this.props.articles
+    // }
+
+    // handleLike = (id) => {
+    //     this.props.like(id)
+    //     // this.setState({});
+    // }
+
+
 
     render() {
 
-        const articles = this.props.articles.reverse().map(article => (
+        const articles = this.props.articles.map(article => (
             <div className='post-panel'>
                 <div className='post-metadata'>
                     <img alt='' className='avatar-image' src={article.author.provider_pic} height='40' width='40'/>
@@ -45,9 +64,10 @@ class Feed extends Component {
                 <div className="post-stats clearfix">
                     <div className="pull-left">
                         <div className="like-button-wrapper">
-                            <form className="button_to" method="get" action="">
-                                <button className="like-button" data-behavior="trigger-overlay" type="submit"><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button></form>
-                            <span className="like-count">{article.claps}</span>
+                            {/* <form className="button_to" method="get" action="">
+                                <button className="like-button" data-behavior="trigger-overlay" type="submit" onClick={() => {this.props.like(article._id);this.props.loadArticles()}}><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button>
+                            <span className="like-count">{article.claps}</span> */}
+                            <LikeButton article={article} action={this.props.like}/>
                         </div>
                     </div>
 
@@ -82,3 +102,26 @@ class Feed extends Component {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Feed);
+
+
+const LikeButton = ({article, action}) => {
+
+    const [getClap = 0, setClap] = React.useState(article.claps)
+
+    const handleLike = (_id) => {
+        action(_id)
+        setClap(getClap+1);
+    }
+    return(
+        <div>
+                                        {/* <form className="button_to" method="get" action=""> */}
+            <button className="like-button" 
+                    type="submit" 
+                    onClick={() => handleLike(article._id)}>
+                <i className="fa fa-heart-o"></i>
+                <span className="hide-text">Like</span>
+            </button>
+            <span className="like-count">{getClap}</span>
+        </div>
+    )
+}

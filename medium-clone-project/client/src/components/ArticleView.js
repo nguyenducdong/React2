@@ -149,8 +149,8 @@ class ArticleView extends Component {
                     <div className="flex-container is-inView" data-behavior="animated-metadata">
                         <div className="post-stats flex-container">
                             <div className="like-button-wrapper">
-                                <form className="button_to" method="get" action=""><button className="like-button" data-behavior="trigger-overlay" type="submit"><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button>
-                                </form> <span className="like-count">0</span>
+                                <button className="like-button" data-behavior="trigger-overlay" type="submit" onClick={() => this.props.clap(this.props._article._id)}><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button>
+                                <span className="like-count">{claps}</span>
                             </div>
 
 

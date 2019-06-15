@@ -10,6 +10,8 @@ import {ConnectedRouter} from 'connected-react-router'
 import  * as constant from './constants/constant_action_type'
 import {getUser} from './redux/actions/action'
 import './asset/medium.css'
+// import './asset/bootstrap3.css'
+// import './components/newComponent/headerNew.css'
 import Immutable from 'immutable'
 
 const initialState = Immutable.Map()
