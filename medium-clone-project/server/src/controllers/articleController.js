@@ -41,8 +41,11 @@ module.exports = {
                 res.send(err)
             else if (!article)
                 res.send(404)
-            else
+            else {
+                article = article.reverse();
                 res.send(article)
+            }
+                
             next()            
         })
     },
