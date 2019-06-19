@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadArticles, clap} from '../redux/actions/action'
+import {doRequestAllArticle, doRequestClapArticle} from '../redux/actions/action'
 import AsideFeed from './AsideFeed'
-import { id } from 'postcss-selector-parser';
+
 
 const mapStateToProps = state => {
     return {
@@ -11,29 +11,27 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {
-    loadArticles: loadArticles,
-    like: clap
+const mapDispatchToProps =  dispatch => {
+    return {
+        requestArticles: () => dispatch(doRequestAllArticle()),
+        likeButtonAction: (article_id) => dispatch(doRequestClapArticle(article_id))
+    }
 }
 
-const handleLike = (id) => {
-    clap(id)
-    // this.setState({});
-}
+
+
 
 class Feed extends Component {
 
     componentWillMount() {
-        this.props.loadArticles()
+        this.props.requestArticles()
     }
-    // state = {
-    //     articleState: this.props.articles
-    // }
-
-    // handleLike = (id) => {
-    //     this.props.like(id)
-    //     // this.setState({});
-    // }
+   componentDidUpdate() {
+    // this.props.requestArticles()
+   }
+   componentDidMount(){
+    // this.props.requestArticles()
+   }
 
 
 
@@ -67,7 +65,7 @@ class Feed extends Component {
                             {/* <form className="button_to" method="get" action="">
                                 <button className="like-button" data-behavior="trigger-overlay" type="submit" onClick={() => {this.props.like(article._id);this.props.loadArticles()}}><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button>
                             <span className="like-count">{article.claps}</span> */}
-                            <LikeButton article={article} action={this.props.like}/>
+                            <LikeButton article={article} action={this.props.likeButtonAction}/>
                         </div>
                     </div>
 

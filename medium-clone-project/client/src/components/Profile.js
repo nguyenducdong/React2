@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import FollowButton from './FollowButton'
 import { 
-    getUserProfile, 
-    follow
+    doRequestUserProfile
 } from '../redux/actions/action'
 
 class Profile extends Component {
@@ -134,7 +133,10 @@ const mapStateToProps = state => {
         profile: state.authUser.profile
     }
 }
-export default connect(mapStateToProps, {
-    getUserProfile,
-    follow
-})(Profile);
+
+const mapDispatchToProp = dispatch => {
+    return {
+        getUserProfile: (_id) => dispatch(doRequestUserProfile(_id)),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProp)(Profile);

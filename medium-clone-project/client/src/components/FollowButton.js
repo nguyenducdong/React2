@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
     follow,
-    toggleOpen
+    doToggleOpen,
+    doRequestFollow
 } from '../redux/actions/action'
 
 /** renders bg white when user not follow, render green when followed */
@@ -18,7 +19,7 @@ class FollowButton extends Component {
             if (this.props._user._id !== this.props.to_follow) {
                 // check if you are not already following him
                 if (this.props.user.indexOf(this.props.to_follow) === -1) {
-                    this.props.follow(this.props._user._id,this.props.to_follow)
+                    this.props.followButtonAction(this.props._user._id,this.props.to_follow)
                 }
             }
         }else{
@@ -42,7 +43,12 @@ const mapStateToProps = state => {
         _user: state.authUser.user,
     }
 }
-export default connect(mapStateToProps, { 
-    follow,
-    toggleOpen
-})(FollowButton);
+
+const mapDispatchToProps = dispatch => {
+    return {
+        followButtonAction: (id, user_id) => dispatch(doRequestFollow(id, user_id)),
+        toggleOpen: () => dispatch(doToggleOpen())
+
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FollowButton);

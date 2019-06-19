@@ -53,11 +53,26 @@ module.exports = {
      * article_id
      */
     clapArticle: (req, res, next) => {
-        Article.findById(req.body.article_id).then((article)=> {
-            return article.clap().then(()=>{
-                return res.json({msg: "Done"})
+        // Article.findById(req.body.article_id).then((article)=> {
+        //     return article.clap().then(()=>{
+        //         return res.json(article)
+        //     })
+        // }).catch(next)
+        try {
+            Article.findById(req.body.article_id).populate('author').exec(async (err, article) => {
+                if(err){
+                    res.json(err)
+                } else if(!article){
+                    res.json(404)
+                } else {
+                    await article.clap();
+                    res.json(article)
+                }
+                next()
             })
-        }).catch(next)
+        } catch (error) {
+            
+        }
     },
     /**
      * comment, author_id, article_id

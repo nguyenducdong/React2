@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import {
     getArticle,
     clap,
-    follow
+    follow,
+    doRequestViewArticle,
+    doRequestClapArticle
 } from '../redux/actions/action';
 
 import PropTypes from 'prop-types'
@@ -16,10 +18,16 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {
-    getArticle,
-    clap,
-    follow
+// const mapDispatchToProps = {
+//     getArticle,
+//     clap,
+//     follow
+// }
+const mapDispatchToProps = dispatch => {
+    return {
+        requestViewArticles: (article_id) => dispatch(doRequestViewArticle(article_id)),
+        likeButtonAction: (article_id) => dispatch(doRequestClapArticle(article_id))
+    }
 }
 
 class ArticleView extends Component {
@@ -28,7 +36,7 @@ class ArticleView extends Component {
     }
 
     componentWillMount() {
-        this.props.getArticle(this.props.match.params.id)
+        this.props.requestViewArticles(this.props.match.params.id)
     }    
 
     componentWillUnmount() {
@@ -83,7 +91,7 @@ class ArticleView extends Component {
                         <div className="post-stats clearfix">
                             <div className="pull-left">
                                 <div className="like-button-wrapper">
-                                    <button onClick={() => this.props.clap(this.props._article._id)} className="like-button" data-behavior="trigger-overlay" type="submit">
+                                    <button onClick={() => this.props.likeButtonAction(this.props._article._id)} className="like-button" data-behavior="trigger-overlay" type="submit">
                                     <i className="fa fa-heart-o"></i><span className="hide-text">Like</span>
                                     </button>
                                      <span className="like-count">{claps}</span>
@@ -149,7 +157,7 @@ class ArticleView extends Component {
                     <div className="flex-container is-inView" data-behavior="animated-metadata">
                         <div className="post-stats flex-container">
                             <div className="like-button-wrapper">
-                                <button className="like-button" data-behavior="trigger-overlay" type="submit" onClick={() => this.props.clap(this.props._article._id)}><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button>
+                                <button className="like-button" data-behavior="trigger-overlay" type="submit" onClick={() => this.props.likeButtonAction(this.props._article._id)}><i className="fa fa-heart-o"></i><span className="hide-text">Like</span></button>
                                 <span className="like-count">{claps}</span>
                             </div>
 

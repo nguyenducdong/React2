@@ -8,7 +8,7 @@ import {configureStore, history} from './redux/store/configureStore'
 import {Route, Switch} from 'react-router-dom'
 import {ConnectedRouter} from 'connected-react-router'
 import  * as constant from './constants/constant_action_type'
-import {getUser} from './redux/actions/action'
+import {doRequestGetUser} from './redux/actions/action'
 import './asset/medium.css'
 // import './asset/bootstrap3.css'
 // import './components/newComponent/headerNew.css'
@@ -24,9 +24,12 @@ if(localStorage.Auth) {
     // update localStorage
     store.dispatch({type: constant.SET_USER, payload: {user: JSON.parse(localStorage.Auth)}});
     var _id = JSON.parse(localStorage.Auth)._id;
-    getUser(_id).then(res => {
-        store.dispatch({type: constant.SET_USER, payload: {user: res}});
-    })
+
+    store.dispatch(doRequestGetUser(_id))
+
+    // getUser(_id).then(res => {
+    //     store.dispatch({type: constant.SET_USER, payload: {user: res}});
+    // })
 }
 
 

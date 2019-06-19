@@ -3,12 +3,17 @@ import rootReducer from '../reducers/rootReducer'
 import thunk from 'redux-thunk'
 import {createBrowserHistory} from 'history'
 import {routerMiddleware} from 'connected-react-router'
+import rootSaga from '../../saga'
+import createSagaMiddleware from 'redux-saga'
+ 
 
 
 export const history = createBrowserHistory();
 
+const saga = createSagaMiddleware()
+
 export const configureStore =  (preloadedState) => {
-    const middlewares = [routerMiddleware(history), thunk];
+    const middlewares = [routerMiddleware(history), saga];
     const middlewaresEnhancer = applyMiddleware(...middlewares)
     const enhancers = [middlewaresEnhancer];
     const composedEnhancers = compose(...enhancers)
@@ -17,9 +22,13 @@ export const configureStore =  (preloadedState) => {
         preloadedState,
         composedEnhancers
     )
+    saga.run(rootSaga);
     return store;
-
 }
+
+
+
+
 
 // compose(
 //     applyMiddleware(
