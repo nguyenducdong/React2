@@ -26,14 +26,6 @@ class Feed extends Component {
     componentWillMount() {
         this.props.requestArticles()
     }
-   componentDidUpdate() {
-    // this.props.requestArticles()
-   }
-   componentDidMount(){
-    // this.props.requestArticles()
-   }
-
-
 
     render() {
 

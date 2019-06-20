@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
-    follow,
     doToggleOpen,
     doRequestFollow
 } from '../redux/actions/action'

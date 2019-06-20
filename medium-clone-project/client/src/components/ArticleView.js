@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {
-    getArticle,
-    clap,
-    follow,
     doRequestViewArticle,
     doRequestClapArticle
 } from '../redux/actions/action';
