@@ -1,3 +1,4 @@
+// @flow
 import * as constant from '../../constants/constant_action_type'
 const initialState = {
     user: {},
