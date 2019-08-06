@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-
+//
 const withAmount = (currencyComponent) => 
   class Amount extends Component {
     constructor(props){
