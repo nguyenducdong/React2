@@ -8,8 +8,7 @@ import ArticleView from './components/ArticleView'
 import Editor from './components/Editor'
 import SignInWith from './components/SignInWith'
 import requireAuthentication from './utils/requireAuth'
-import HeaderNew from './components/newComponent/HeaderNew'
-import Login from './components/newComponent/Login'
+
 
 function App() {
   const pathName = window.location.pathname

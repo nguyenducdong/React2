@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import GoogleLogin from 'react-google-login'
 import { 
-    SignInUser,
-    toggleClose,
-    toggleOpen
+    doRequestSignInUser,
+    doToggleClose,
+    doToggleOpen
  } from '../redux/actions/action'
 
 class SignInWith extends Component {
@@ -55,8 +55,12 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {
-    toggleClose,
-    toggleOpen,
-    SignInUser
-})(SignInWith);
+const mapDispatchToProp = dispatch => {
+    return {
+        SignInUser: (user_data) => dispatch(doRequestSignInUser(user_data)),
+        toggleClose: () => dispatch(doToggleClose()),
+        toggleOpen: () => dispatch(doToggleOpen())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProp)(SignInWith);

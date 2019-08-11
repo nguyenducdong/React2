@@ -1,7 +1,28 @@
 export const LOAD_ARTICLES = 'LOAD_ARTICLES';
-export const VIEW_ARTICLE = 'VIEW_ARTICLE';
-export const CLAP_ARTICLE = 'CLAP_ARTICLE';
-export const SET_USER = 'SET_USER';
-export const FOLLOW_USER = 'FOLLOW_USER';
-export const SET_PROFILE = 'SET_PROFILE';
+
+
+
+
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+
+//--------
+export const ALL_ARTICLES_RECEIVED = 'ALL_ARTICLES_RECEIVED';
+export const REQUEST_ALL_ARTICLES = 'REQUEST_ALL_ARTICLES';
+
+export const CLAP_ARTICLE = 'CLAP_ARTICLE';
+export const REQUEST_CLAP_ARTICLE = 'REQUEST_CLAP_ARTICLE';
+
+export const REQUEST_FOLLOW_USER = 'REQUEST_FOLLOW_USER';
+export const FOLLOW_USER = 'FOLLOW_USER';
+
+export const VIEW_ARTICLE = 'VIEW_ARTICLE';
+export const REQUEST_VIEW_ARTICLE = 'REQUEST_VIEW_ARTICLE';
+
+export const SET_USER = 'SET_USER';
+export const REQUEST_SIGN_USER = 'REQUEST_SIGN_USER';
+
+export const REQUEST_GET_USER = 'REQUEST_GET_USER'
+// export const REQUEST_GET_USER = 'REQUEST_GET_USER'
+
+export const SET_PROFILE = 'SET_PROFILE';
+export const REQUEST_SET_PROFILE = 'REQUEST_SET_PROFILE';

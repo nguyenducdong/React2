@@ -6,7 +6,8 @@ export default function (AComponent) {
     class Authenticate extends Component {
         componentWillMount() {
             if(!this.props.isAuth){
-                this.context.router.history.push('/')
+                // this.context.router.history.push('/')
+                this.props.history.push('/');
             }
         }
         render(){
